@@ -4,6 +4,8 @@ module V1
       order = Order.new(permitted_params.merge(user_permitted_params))
 
       if order.save
+        MessagePublisher.publish(order)
+
         render json: order, status: :created
       else
         render json: { errors: order.errors }, status: :unprocessable_entity

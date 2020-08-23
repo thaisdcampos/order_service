@@ -2,18 +2,22 @@ version: '3'
 services:
   rails:
     build: .
-    command: rails s -b 0.0.0.0
     container_name: order_service
     ports:
-      - 3000:3000
+     - '3000:3000'
     volumes:
       - .:/opt/app
     environment: 
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST=db
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+    restart: on-failure
     links:
       - db
+      - rabbitmq
   db:
     image: postgres:12-alpine
     environment:
@@ -21,5 +25,13 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - order_service_data:/var/lib/postgresql/data
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - '15672:15672'
+    volumes:
+      - order_service_data:/var/lib/rabbitmq/data
 volumes:
   order_service_data:

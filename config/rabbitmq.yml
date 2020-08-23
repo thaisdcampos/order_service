@@ -1,0 +1,18 @@
+development: &default
+  amqp: <%= ENV.fetch('MESSAGE_BROKER_URL', 'amqp://guest:guest@localhost:5672') %>
+  vhost: <%= ENV.fetch('MESSAGE_BROKER_VHOST', '/') %>
+  exchange: 'challenge'
+  metadata:
+    app_id: 'order-service'
+    persistent: true
+  exchange_options:
+    type: 'topic'
+    durable: true
+
+test:
+  <<: *default
+  vhost: 'test'
+  exchange_options:
+    type: 'topic'
+    durable: false
+
