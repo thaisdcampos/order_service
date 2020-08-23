@@ -5,6 +5,8 @@ class Order < ApplicationRecord
 
   belongs_to :address
 
+  accepts_nested_attributes_for :address
+
   validates :name, :phone, :email, presence: true
   validates :name, length: { minimum: 2 }, format: { with: NAME_REGEX, on: :create }
   validates :phone, format: { with: PHONE_REGEX, on: :create }
