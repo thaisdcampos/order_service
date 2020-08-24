@@ -1,6 +1,6 @@
 # Order Service
 
-API responsable to handle with order management.
+API responsable to handle order management.
 
 ## Environment dependencies
 
@@ -10,6 +10,10 @@ API responsable to handle with order management.
 
 ## Endpoints
 
+#### Postman collection
+
+* https://www.getpostman.com/collections/dc352d58dbb60754e2a1
+
 #### Order
 
 `POST v1/orders`
@@ -18,11 +22,11 @@ Request attributes:
 
 `user_info` (required)
 
-A Hash of user_info, with the user `name`, `email`, `phone` all data MUST include.
+A Hash of user_info, with the user `name`, `email`, `phone` all of them are required.
 
 `address_attributes` (required)
 
-A Hash of address_attributes, with the address `city`, `heighboorhood`, `street`, `uf`, `zip_code` all data MUST include.
+A Hash of address_attributes, with the address `city`, `neighborhood`, `street`, `uf`, `zip_code` all of them are required.
 
 `request_info` (optional)
 
@@ -73,7 +77,7 @@ You can use docker to run this app.
 ```
 
 ## Alerts
-To execute this project with Geolocation-Service's project you must clone both repos on the same folder and extract the docker-compose.yml to root folder.
+To execute this project with Geolocation-Service's project you must clone both repositories on the same folder and extract the docker-compose.yml to root folder.
 
 ```bash
   docker-compose up --build
