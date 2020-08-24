@@ -4,9 +4,9 @@ module V1
       order = Order.new(permitted_params.merge(user_permitted_params))
 
       if order.save
-        MessagePublisher.publish(order)
+        MessagePublisher.publish(build_message(order))
 
-        render json: order, status: :created
+        render json: order, include: :address, status: :created
       else
         render json: { errors: order.errors }, status: :unprocessable_entity
       end
@@ -53,6 +53,19 @@ module V1
           :longitude
         ]
       )
+    end
+
+    def build_message(order)
+      {
+        order_id: order.id,
+        address: {
+          city: order.address.city,
+          neighborhood: order.address.neighborhood,
+          street: order.address.street,
+          uf: order.address.uf,
+          zip_code: order.address.zip_code,
+        }
+      }
     end
   end
 end
