@@ -1,24 +1,80 @@
-# README
+# Order Service
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+API responsable to handle with order management.
 
-Things you may want to cover:
+## Environment dependencies
 
-* Ruby version
+* Ruby 2.7
+* PostgreSQL
+* RabbitMQ
 
-* System dependencies
+## Endpoints
 
-* Configuration
+#### Order
 
-* Database creation
+`POST v1/orders`
 
-* Database initialization
+Request attributes:
 
-* How to run the test suite
+`user_info` (required)
 
-* Services (job queues, cache servers, search engines, etc.)
+A Hash of user_info, with the user `name`, `email`, `phone` all data MUST include.
 
-* Deployment instructions
+`address_attributes` (required)
 
-* ...
+A Hash of address_attributes, with the address `city`, `heighboorhood`, `street`, `uf`, `zip_code` all data MUST include.
+
+`request_info` (optional)
+
+A Hash of request_info.
+
+
+`PUT v1/orders/:id`
+
+Request attributes:
+
+`address_attributes`
+
+A Hash of address_attributes, with coordinates `latitude` and `longitude`.
+
+### Setup
+You can use docker to run this app. 
+
+```bash
+  docker-compose up -d
+  docker-compose exec order rake db:create
+  docker-compose exec order rake db:migrate
+  docker-compose exec order rake db:test:prepare
+  docker-compose exec order rspec
+```
+
+### Logs
+
+```bash
+  docker-compose logs -f
+```
+
+### Start
+
+```bash
+  docker-compose up
+```
+
+### Stop
+
+```bash
+  docker-compose stop
+```
+
+### Tests
+
+```bash
+  docker-compose exec order rspec
+```
+
+## Alerts
+To execute this project with Geolocation-Service's project you must clone both repos on the same folder and extract the docker-compose.yml to root folder.
+
+```bash
+  docker-compose up --build
+```
