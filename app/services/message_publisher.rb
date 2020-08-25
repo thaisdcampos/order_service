@@ -1,7 +1,7 @@
 class MessagePublisher
   def self.publish(message)
-    x = channel.direct("challenge")
-    x.publish(message.to_json, :persistent => true, :routing_key => 'order_service.order.created')
+    x = channel.fanout("challenge")
+    x.publish(message.to_json)
   end
 
   def self.channel
