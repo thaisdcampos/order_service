@@ -8,48 +8,75 @@ API responsable to handle order management.
 * PostgreSQL
 * RabbitMQ
 
-## Endpoints
-
-#### Postman collection
+## Postman collection
 
 * https://www.getpostman.com/collections/dc352d58dbb60754e2a1
 
-#### Order
+
+## Endpoints
+
+Order Service is a microservice with a public API that deals with orders. 
+
+For now, it implements only two endpoints:
+
+## Create order
 
 `POST v1/orders`
 
-Request attributes:
+This endpoint expects the following payload:
 
-`user_info` (required)
+## user_info (required)
 
-A Hash of user_info, with the user `name`, `email`, `phone` all of them are required.
+A Hash with information about the user, with the user name, email, and phone. All of them are required.
 
-`address_attributes` (required)
+Example:
 
-A Hash of address_attributes, with the address `city`, `neighborhood`, `street`, `uf`, `zip_code` all of them are required.
+json
+"user_info": {
+  "name": "John Doe",
+  "email": "john.doe@gmail.com",
+  "phone": "(11) 987654567"
+}
 
-`request_info` (optional)
 
-A Hash of request_info.
+## address_attributes (required)
+
+A Hash with information about the address of the order, with the city, neighborhood, street, uf, and zip_code. All of them are required.
+
+Example:
+
+json
+"address_attributes: {
+  "city": "São Paulo",
+  "neighborhood": "Itaim",
+  "street": "Rua das nações",
+  "uf": "SP",
+  "zip_code": "14037-5"
+}
 
 
-`PUT v1/orders/:id`
+##  request_info (optional)
 
-Request attributes:
+A Hash with extra information about the order.
 
-`address_attributes`
+Example:
 
-A Hash of address_attributes, with coordinates `latitude` and `longitude`.
+json
+"request_info": {
+  "question1": "answer1",
+  "question2": "answer2",
+  "question3": "answer3"
+}
 
 ### Setup
 You can use docker to run this app. 
 
 ```bash
   docker-compose up -d
-  docker-compose exec order rake db:create
-  docker-compose exec order rake db:migrate
-  docker-compose exec order rake db:test:prepare
-  docker-compose exec order rspec
+  docker-compose exec rails rake db:create
+  docker-compose exec rails rake db:migrate
+  docker-compose exec rails rake db:test:prepare
+  docker-compose exec rails rspec
 ```
 
 ### Logs
@@ -73,7 +100,7 @@ You can use docker to run this app.
 ### Tests
 
 ```bash
-  docker-compose exec order rspec
+  docker-compose exec rails rspec
 ```
 
 ## Alerts
